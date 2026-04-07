@@ -1,26 +1,29 @@
 import { createTheme } from '@mui/material/styles';
 
-// Modern, clean theme for the TODO application
+// Theme for Color Fill game
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#667eea',
+      light: '#9fa8f4',
+      dark: '#3f50b5',
     },
     secondary: {
-      main: '#9c27b0',
-      light: '#ba68c8',
-      dark: '#7b1fa2',
+      main: '#764ba2',
+      light: '#a778d4',
+      dark: '#4a2472',
     },
     success: {
+      // Used by the win-state banner
       main: '#2e7d32',
+      contrastText: '#ffffff',
     },
     error: {
       main: '#d32f2f',
     },
     background: {
-      default: '#f5f5f5',
+      // Slightly warm off-white keeps the game board from feeling sterile
+      default: '#f0f2f5',
       paper: '#ffffff',
     },
   },
@@ -34,37 +37,32 @@ const theme = createTheme({
       'Arial',
       'sans-serif',
     ].join(','),
-    h4: {
+    h5: {
       fontWeight: 600,
     },
     h6: {
+      fontWeight: 700,
+    },
+    body2: {
       fontWeight: 500,
     },
   },
   components: {
-    MuiCard: {
+    // Consistent surface styling for all game panels
+    MuiPaper: {
       styleOverrides: {
         root: {
           borderRadius: 12,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         },
       },
     },
+    // Buttons: no uppercase, rounded, medium weight
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: 'none',
           borderRadius: 8,
-          fontWeight: 500,
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '& .MuiOutlinedInput-root': {
-            borderRadius: 8,
-          },
+          fontWeight: 600,
         },
       },
     },

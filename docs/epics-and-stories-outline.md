@@ -5,8 +5,8 @@
 | Phase 1 – Remove TODO Application Flow | ✅ DONE | `App.js` rewritten with game state shell; all TODO state, mutations, and UI removed. `index.js` cleaned of `QueryClientProvider`. |
 | Phase 2 – Build Core Game Logic | ✅ DONE | `gameLogic.js` created with `generateBoard`, `buildInitialGameState`, `floodFillExpand`, `applyMove`, `isBoardComplete`. Wired into `App.js` via `initGame` and `handleColorSelect`. |
 | Phase 3 – Rebuild the UI | ✅ DONE | Board grid (CSS Grid), captured-cell inset-ring indicator, palette buttons with active double-ring, move counter in header, win-state banner, persistent New Game button. |
-| Phase 4 – Styling and Theming | ⬜ Not started | |
-| Phase 5 – Accessibility | ⬜ Not started | |
+| Phase 4 – Styling and Theming | ✅ DONE | `theme.js` updated with game-focused palette, typography, and component tokens. `App.css` extended with responsive board sizing, win-banner animation, and palette-strip rules. |
+| Phase 5 – Accessibility | ✅ DONE | Accessible names (`aria-label`), `aria-pressed` on palette buttons, `role="status" aria-live="polite"` on win banner, keyboard-reachable MUI buttons, non-color active/captured indicators delivered in Phase 3. |
 | Phase 6 – Rewrite Test Suite | ⬜ Not started | |
 | Phase 7 – Cleanup and Verification | ⬜ Not started | |
 
@@ -134,22 +134,22 @@
     - Technical Requirement: Render the New Game control in a persistent header or status section rather than conditionally mounting it only after completion.
 
 - Epic: Responsive and Accessible UI
-  - Story: Support desktop and mobile layouts
+  - Story: ✅ DONE – Support desktop and mobile layouts
     - Acceptance Criteria: The app layout remains usable on desktop and mobile widths.
     - Acceptance Criteria: The UI remains responsive for moderate board sizes such as `10x10` and `12x12`.
     - Technical Requirement: Rework the current container and card layout in `packages/frontend/src/App.js` so the board and palette wrap cleanly across breakpoints.
     - Technical Requirement: Size cells and spacing responsively using MUI `sx` breakpoints or CSS rules in `packages/frontend/src/App.css`.
-  - Story: Make color controls keyboard accessible
+  - Story: ✅ DONE – Make color controls keyboard accessible
     - Acceptance Criteria: Color controls can be reached and activated using the keyboard.
     - Technical Requirement: Use semantic button elements from MUI so palette controls inherit keyboard behavior without custom key handling.
-  - Story: Add accessible names to interactive controls
+  - Story: ✅ DONE – Add accessible names to interactive controls
     - Acceptance Criteria: Color controls and the New Game control expose accessible names.
     - Technical Requirement: Provide explicit accessible labels for palette buttons and the New Game action in `packages/frontend/src/App.js`.
-  - Story: Convey captured and active states without color alone
+  - Story: ✅ DONE – Convey captured and active states without color alone
     - Acceptance Criteria: The active palette choice is identifiable without relying only on color.
     - Acceptance Criteria: Captured cells are identifiable without relying only on color.
     - Technical Requirement: Add non-color cues such as selected outlines, labels, aria attributes, or iconography in the board and palette UI.
-  - Story: Announce the win state to assistive technologies
+  - Story: ✅ DONE – Announce the win state to assistive technologies
     - Acceptance Criteria: The completion message is exposed to assistive technologies when the game is won.
     - Technical Requirement: Render the win state in a semantic status region or live region in `packages/frontend/src/App.js`.
 

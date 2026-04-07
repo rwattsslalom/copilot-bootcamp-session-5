@@ -87,6 +87,7 @@ function App() {
         {/* ── Step 11: Win state ── */}
         {isComplete && (
           <Paper
+            className="win-banner"
             role="status"
             aria-live="polite"
             elevation={2}
@@ -106,8 +107,9 @@ function App() {
         )}
 
         {/* ── Step 8 + 9: Game board grid with captured-cell treatment ── */}
-        <Paper elevation={2} sx={{ p: 1.5, borderRadius: 2, mb: 3 }}>
+        <Paper elevation={2} sx={{ p: 1.5, borderRadius: 2, mb: 3 }} className="game-board">
           <Box
+            className="game-board-grid"
             sx={{
               display: 'grid',
               gridTemplateColumns: `repeat(${columns}, 1fr)`,

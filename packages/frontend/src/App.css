@@ -1,4 +1,4 @@
-/* Game-level animation */
+/* ── Entrance animation ─────────────────────────────────── */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -10,7 +10,56 @@
   }
 }
 
-/* Fade-in on load for the outer container */
 #root > div {
   animation: fadeIn 0.25s ease-in;
+}
+
+/* ── Responsive board sizing ────────────────────────────── */
+/*
+  The board grid is rendered via MUI sx / inline styles.
+  These rules ensure the surrounding container does not overflow
+  on narrow viewports and that cells stay square at all sizes.
+*/
+
+/* Constrain the board paper on very small screens */
+@media (max-width: 480px) {
+  .game-board {
+    padding: 8px !important;
+  }
+}
+
+/* Make sure board cells never collapse to < 8 px on large grids (10-12 cols) */
+.game-board-grid {
+  min-width: 0;   /* allow CSS Grid to shrink children */
+  width: 100%;
+}
+
+.game-board-grid > div {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ── Win-state entrance ─────────────────────────────────── */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.win-banner {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* ── Palette area ───────────────────────────────────────── */
+.palette-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
 }
