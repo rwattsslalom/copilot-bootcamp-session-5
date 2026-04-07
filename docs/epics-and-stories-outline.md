@@ -8,7 +8,7 @@
 | Phase 4 – Styling and Theming | ✅ DONE | `theme.js` updated with game-focused palette, typography, and component tokens. `App.css` extended with responsive board sizing, win-banner animation, and palette-strip rules. |
 | Phase 5 – Accessibility | ✅ DONE | Accessible names (`aria-label`), `aria-pressed` on palette buttons, `role="status" aria-live="polite"` on win banner, keyboard-reachable MUI buttons, non-color active/captured indicators delivered in Phase 3. |
 | Phase 6 – Rewrite Test Suite | ✅ DONE | `gameLogic.test.js` added with 23 pure unit tests. `App.test.js` replaced with 5 UI interaction tests using `_testState` injection. 31/31 tests pass. |
-| Phase 7 – Cleanup and Verification | ⬜ Not started | |
+| Phase 7 – Cleanup and Verification | ✅ DONE | Imports already clean. `npm run build` compiled successfully. 31/31 tests pass. |
 
 > **Note:** No individual feature stories are marked DONE yet. Phase 1 is the preparatory cleanup and game state scaffolding pass. Feature stories' acceptance criteria are satisfied as their game functionality is built in Phases 2–3.
 
