@@ -3,7 +3,7 @@
 | Phase | Status | Notes |
 |-------|--------|-------|
 | Phase 1 – Remove TODO Application Flow | ✅ DONE | `App.js` rewritten with game state shell; all TODO state, mutations, and UI removed. `index.js` cleaned of `QueryClientProvider`. |
-| Phase 2 – Build Core Game Logic | ⬜ Not started | |
+| Phase 2 – Build Core Game Logic | ✅ DONE | `gameLogic.js` created with `generateBoard`, `buildInitialGameState`, `floodFillExpand`, `applyMove`, `isBoardComplete`. Wired into `App.js` via `initGame` and `handleColorSelect`. |
 | Phase 3 – Rebuild the UI | ⬜ Not started | |
 | Phase 4 – Styling and Theming | ⬜ Not started | |
 | Phase 5 – Accessibility | ⬜ Not started | |
@@ -15,17 +15,17 @@
 ---
 
 - Epic: Game Board Setup
-  - Story: Generate a configurable color grid
+  - Story: ✅ DONE – Generate a configurable color grid
     - Acceptance Criteria: A new game creates a rectangular grid using configurable row and column values.
     - Acceptance Criteria: The rendered board matches the configured dimensions.
     - Technical Requirement: Replace the current todo-focused screen in `packages/frontend/src/App.js` with game state that stores `rows`, `columns`, and a generated board matrix.
     - Technical Requirement: Implement a reusable board-generation utility that returns a rectangular two-dimensional array for configurable dimensions.
-  - Story: Populate the board from the active color palette
+  - Story: ✅ DONE – Populate the board from the active color palette
     - Acceptance Criteria: Each generated cell is assigned a color from the configured palette.
     - Acceptance Criteria: No generated cell uses a color outside the configured palette.
     - Technical Requirement: Store the active palette in frontend state or configuration rather than hardcoding todo-specific UI values in `packages/frontend/src/App.js`.
     - Technical Requirement: Ensure the board-generation utility selects colors only from the configured palette source.
-  - Story: Ensure a new board starts with multiple colors
+  - Story: ✅ DONE – Ensure a new board starts with multiple colors
     - Acceptance Criteria: A newly generated board contains at least two colors unless a test-specific configuration allows otherwise.
     - Technical Requirement: Add validation in board generation to retry or regenerate when a non-test board resolves to a single color.
   - Story: Initialize the starting captured cell
@@ -35,20 +35,20 @@
     - Technical Requirement: Add captured-region styling in `packages/frontend/src/App.css` or MUI `sx` props so the initial selection is visibly distinct.
 
 - Epic: Captured Region Management
-  - Story: Track captured cells across the board
+  - Story: ✅ DONE (logic) – Track captured cells across the board
     - Acceptance Criteria: The game stores which coordinates belong to the captured region.
     - Acceptance Criteria: Captured cells are rendered with a distinct visual treatment.
     - Technical Requirement: Replace the current remote todo collection from React Query with local game state for captured coordinates, preferably a `Set` keyed by `row,column`.
     - Technical Requirement: Pass captured-state membership from the top-level `App` component into board and cell rendering rather than inferring it from DOM state.
-  - Story: Keep the captured region contiguous
+  - Story: ✅ DONE – Keep the captured region contiguous
     - Acceptance Criteria: The captured region remains a single orthogonally connected area after initialization and after each valid move.
     - Technical Requirement: Centralize capture updates in pure game-logic helpers so contiguity is enforced by algorithm rather than UI events.
-  - Story: Sync captured region color with the active color
+  - Story: ✅ DONE (logic) – Sync captured region color with the active color
     - Acceptance Criteria: The displayed color of all captured cells matches the current captured-region color.
     - Acceptance Criteria: After a valid move, all previously captured cells update to the selected color.
     - Technical Requirement: Store `currentColor` alongside captured coordinates in `packages/frontend/src/App.js` and use it when rendering captured cells.
     - Technical Requirement: Update board data immutably when recoloring captured cells so React re-renders reliably.
-  - Story: Expand the starting region for matching adjacent cells
+  - Story: ✅ DONE – Expand the starting region for matching adjacent cells
     - Acceptance Criteria: On new game setup, any cells orthogonally connected to the starting cell and sharing its color are added to the captured region.
     - Acceptance Criteria: Diagonal-only matching cells are not included in the initial expansion.
     - Technical Requirement: Run the same flood-fill utility during initialization that will be used during gameplay so starting-region behavior and move behavior stay consistent.
@@ -62,7 +62,7 @@
   - Story: Highlight the active color choice
     - Acceptance Criteria: The currently active captured-region color is visually distinguishable in the palette.
     - Technical Requirement: Extend the current MUI-based styling approach in `packages/frontend/src/theme.js` and `packages/frontend/src/App.css` to support an active palette state.
-  - Story: Ignore moves that repeat the current color
+  - Story: ✅ DONE – Ignore moves that repeat the current color
     - Acceptance Criteria: Selecting the current captured-region color does not change the board.
     - Acceptance Criteria: Selecting the current captured-region color does not increment the move counter.
     - Technical Requirement: Guard the palette click handler in `packages/frontend/src/App.js` before any state updates occur when the selected color equals `currentColor`.
@@ -71,18 +71,18 @@
     - Technical Requirement: Wire palette controls to a single move handler in `packages/frontend/src/App.js`, replacing the current todo add, toggle, and delete handlers.
 
 - Epic: Flood Fill Gameplay
-  - Story: Recolor the captured region on valid moves
+  - Story: ✅ DONE – Recolor the captured region on valid moves
     - Acceptance Criteria: On a valid color selection, all cells in the captured region adopt the selected color.
     - Technical Requirement: Implement a pure recolor step that updates all currently captured board coordinates before running expansion.
-  - Story: Capture orthogonally connected matching cells
+  - Story: ✅ DONE – Capture orthogonally connected matching cells
     - Acceptance Criteria: After recoloring, any orthogonally adjacent cells matching the selected color are added to the captured region.
     - Acceptance Criteria: Expansion continues until no further orthogonally adjacent matching cells remain.
     - Technical Requirement: Add a flood-fill helper using breadth-first search or depth-first search and call it from the move handler in `packages/frontend/src/App.js`.
     - Technical Requirement: Keep neighbor lookup logic isolated in a utility so board traversal rules are testable outside the component.
-  - Story: Exclude diagonal-only cells from capture
+  - Story: ✅ DONE – Exclude diagonal-only cells from capture
     - Acceptance Criteria: Cells that only touch the captured region diagonally are not captured.
     - Technical Requirement: Limit neighbor generation to up, down, left, and right coordinates only.
-  - Story: Stop expansion when no matching neighbors remain
+  - Story: ✅ DONE – Stop expansion when no matching neighbors remain
     - Acceptance Criteria: Flood-fill processing completes when the search frontier contains no uncaptured orthogonal neighbors of the target color.
     - Technical Requirement: Ensure the flood-fill helper terminates on an exhausted queue or stack and does not rely on render loops or asynchronous polling.
 
@@ -90,13 +90,13 @@
   - Story: Show the current move count
     - Acceptance Criteria: The UI displays the current move total during gameplay.
     - Technical Requirement: Replace the current placeholder stats chips in `packages/frontend/src/App.js` with move-count output derived from game state.
-  - Story: Start the move counter at zero
+  - Story: ✅ DONE – Start the move counter at zero
     - Acceptance Criteria: A new game initializes the move counter to `0`.
     - Technical Requirement: Initialize `moves` in the new game setup path and reset it whenever the board is regenerated.
-  - Story: Increment moves after valid color changes
+  - Story: ✅ DONE – Increment moves after valid color changes
     - Acceptance Criteria: Each valid color selection increments the move counter by exactly `1`.
     - Technical Requirement: Increment moves in the same transaction as a valid recolor-and-capture update to avoid duplicate counts.
-  - Story: Detect when the full board is captured
+  - Story: ✅ DONE – Detect when the full board is captured
     - Acceptance Criteria: The game marks completion when every board cell belongs to the captured region.
     - Technical Requirement: Compute completion from captured cell count versus total board size after initialization and after each valid move.
 
@@ -105,14 +105,14 @@
     - Acceptance Criteria: When all board cells are captured, the UI displays a completion message.
     - Acceptance Criteria: The completion message does not rely only on color.
     - Technical Requirement: Replace the current todo heading and passive stats section with a game status area that conditionally renders a completion message.
-  - Story: Prevent additional progress after game completion
+  - Story: ✅ DONE – Prevent additional progress after game completion
     - Acceptance Criteria: Once the game is complete, further color selections do not change the board state.
     - Acceptance Criteria: Once the game is complete, further color selections do not increment the move counter.
     - Technical Requirement: Add an `isComplete` guard to the shared palette click handler in `packages/frontend/src/App.js`.
   - Story: Add a New Game control
     - Acceptance Criteria: The UI provides a New Game control during active play and after completion.
     - Technical Requirement: Repurpose one of the existing MUI buttons in `packages/frontend/src/App.js` as a persistent New Game action.
-  - Story: Reset game state on New Game
+  - Story: ✅ DONE (logic) – Reset game state on New Game
     - Acceptance Criteria: Activating New Game regenerates the board.
     - Acceptance Criteria: Activating New Game resets the captured region to the initial starting region.
     - Acceptance Criteria: Activating New Game resets the move counter to `0`.

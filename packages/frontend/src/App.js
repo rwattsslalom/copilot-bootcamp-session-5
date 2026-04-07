@@ -6,23 +6,28 @@ import {
   Paper,
 } from '@mui/material';
 import './App.css';
+import { generateBoard, buildInitialGameState, applyMove } from './gameLogic';
 
 // Game configuration
 const ROWS = 8;
 const COLUMNS = 8;
 const PALETTE = ['red', 'yellow', 'green', 'blue', 'purple'];
 
+function initGame() {
+  const board = generateBoard(ROWS, COLUMNS, PALETTE);
+  return buildInitialGameState(board, PALETTE);
+}
+
 function App() {
-  const [gameState, setGameState] = useState({
-    rows: ROWS,
-    columns: COLUMNS,
-    palette: PALETTE,
-    board: [],        // populated in Phase 2 – board generation utilities
-    captured: new Set(), // Set of 'row,col' coordinate keys
-    currentColor: null,
-    moves: 0,
-    isComplete: false,
-  });
+  const [gameState, setGameState] = useState(initGame);
+
+  const handleColorSelect = (color) => {
+    setGameState((prev) => applyMove(prev, color));
+  };
+
+  const handleNewGame = () => {
+    setGameState(initGame());
+  };
 
   return (
     <Box
