@@ -1,10 +1,8 @@
-/* Minimal custom CSS - MUI handles most styling */
-
-/* Custom animations */
+/* Game-level animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -12,6 +10,7 @@
   }
 }
 
-.App {
-  animation: fadeIn 0.3s ease-in;
+/* Fade-in on load for the outer container */
+#root > div {
+  animation: fadeIn 0.25s ease-in;
 }

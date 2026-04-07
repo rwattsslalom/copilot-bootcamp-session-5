@@ -4,7 +4,7 @@
 |-------|--------|-------|
 | Phase 1 – Remove TODO Application Flow | ✅ DONE | `App.js` rewritten with game state shell; all TODO state, mutations, and UI removed. `index.js` cleaned of `QueryClientProvider`. |
 | Phase 2 – Build Core Game Logic | ✅ DONE | `gameLogic.js` created with `generateBoard`, `buildInitialGameState`, `floodFillExpand`, `applyMove`, `isBoardComplete`. Wired into `App.js` via `initGame` and `handleColorSelect`. |
-| Phase 3 – Rebuild the UI | ⬜ Not started | |
+| Phase 3 – Rebuild the UI | ✅ DONE | Board grid (CSS Grid), captured-cell inset-ring indicator, palette buttons with active double-ring, move counter in header, win-state banner, persistent New Game button. |
 | Phase 4 – Styling and Theming | ⬜ Not started | |
 | Phase 5 – Accessibility | ⬜ Not started | |
 | Phase 6 – Rewrite Test Suite | ⬜ Not started | |
@@ -28,14 +28,14 @@
   - Story: ✅ DONE – Ensure a new board starts with multiple colors
     - Acceptance Criteria: A newly generated board contains at least two colors unless a test-specific configuration allows otherwise.
     - Technical Requirement: Add validation in board generation to retry or regenerate when a non-test board resolves to a single color.
-  - Story: Initialize the starting captured cell
+  - Story: ✅ DONE – Initialize the starting captured cell
     - Acceptance Criteria: A new game starts with the coordinate `0,0` as the initial captured cell.
     - Acceptance Criteria: The initial captured region is visible on first render.
     - Technical Requirement: Initialize captured-region state from the top-left cell and expose that state to the board renderer in `packages/frontend/src/App.js`.
     - Technical Requirement: Add captured-region styling in `packages/frontend/src/App.css` or MUI `sx` props so the initial selection is visibly distinct.
 
 - Epic: Captured Region Management
-  - Story: ✅ DONE (logic) – Track captured cells across the board
+  - Story: ✅ DONE – Track captured cells across the board
     - Acceptance Criteria: The game stores which coordinates belong to the captured region.
     - Acceptance Criteria: Captured cells are rendered with a distinct visual treatment.
     - Technical Requirement: Replace the current remote todo collection from React Query with local game state for captured coordinates, preferably a `Set` keyed by `row,column`.
@@ -43,7 +43,7 @@
   - Story: ✅ DONE – Keep the captured region contiguous
     - Acceptance Criteria: The captured region remains a single orthogonally connected area after initialization and after each valid move.
     - Technical Requirement: Centralize capture updates in pure game-logic helpers so contiguity is enforced by algorithm rather than UI events.
-  - Story: ✅ DONE (logic) – Sync captured region color with the active color
+  - Story: ✅ DONE – Sync captured region color with the active color
     - Acceptance Criteria: The displayed color of all captured cells matches the current captured-region color.
     - Acceptance Criteria: After a valid move, all previously captured cells update to the selected color.
     - Technical Requirement: Store `currentColor` alongside captured coordinates in `packages/frontend/src/App.js` and use it when rendering captured cells.
@@ -54,19 +54,19 @@
     - Technical Requirement: Run the same flood-fill utility during initialization that will be used during gameplay so starting-region behavior and move behavior stay consistent.
 
 - Epic: Color Selection Controls
-  - Story: Render selectable color buttons
+  - Story: ✅ DONE – Render selectable color buttons
     - Acceptance Criteria: The app renders one control for each available color in the palette.
     - Acceptance Criteria: Each color control visually matches its represented board color.
     - Technical Requirement: Replace the current add-todo form controls in `packages/frontend/src/App.js` with palette button rendering derived from the configured color list.
     - Technical Requirement: Use existing MUI button primitives or chips already available in the codebase to render the palette consistently.
-  - Story: Highlight the active color choice
+  - Story: ✅ DONE – Highlight the active color choice
     - Acceptance Criteria: The currently active captured-region color is visually distinguishable in the palette.
     - Technical Requirement: Extend the current MUI-based styling approach in `packages/frontend/src/theme.js` and `packages/frontend/src/App.css` to support an active palette state.
   - Story: ✅ DONE – Ignore moves that repeat the current color
     - Acceptance Criteria: Selecting the current captured-region color does not change the board.
     - Acceptance Criteria: Selecting the current captured-region color does not increment the move counter.
     - Technical Requirement: Guard the palette click handler in `packages/frontend/src/App.js` before any state updates occur when the selected color equals `currentColor`.
-  - Story: Support pointer selection for palette controls
+  - Story: ✅ DONE – Support pointer selection for palette controls
     - Acceptance Criteria: Clicking a color control triggers move handling for that color.
     - Technical Requirement: Wire palette controls to a single move handler in `packages/frontend/src/App.js`, replacing the current todo add, toggle, and delete handlers.
 
@@ -87,7 +87,7 @@
     - Technical Requirement: Ensure the flood-fill helper terminates on an exhausted queue or stack and does not rely on render loops or asynchronous polling.
 
 - Epic: Game Progress Tracking
-  - Story: Show the current move count
+  - Story: ✅ DONE – Show the current move count
     - Acceptance Criteria: The UI displays the current move total during gameplay.
     - Technical Requirement: Replace the current placeholder stats chips in `packages/frontend/src/App.js` with move-count output derived from game state.
   - Story: ✅ DONE – Start the move counter at zero
@@ -101,7 +101,7 @@
     - Technical Requirement: Compute completion from captured cell count versus total board size after initialization and after each valid move.
 
 - Epic: Game Completion and Restart
-  - Story: Display a win state when the board is complete
+  - Story: ✅ DONE – Display a win state when the board is complete
     - Acceptance Criteria: When all board cells are captured, the UI displays a completion message.
     - Acceptance Criteria: The completion message does not rely only on color.
     - Technical Requirement: Replace the current todo heading and passive stats section with a game status area that conditionally renders a completion message.
@@ -109,10 +109,10 @@
     - Acceptance Criteria: Once the game is complete, further color selections do not change the board state.
     - Acceptance Criteria: Once the game is complete, further color selections do not increment the move counter.
     - Technical Requirement: Add an `isComplete` guard to the shared palette click handler in `packages/frontend/src/App.js`.
-  - Story: Add a New Game control
+  - Story: ✅ DONE – Add a New Game control
     - Acceptance Criteria: The UI provides a New Game control during active play and after completion.
     - Technical Requirement: Repurpose one of the existing MUI buttons in `packages/frontend/src/App.js` as a persistent New Game action.
-  - Story: ✅ DONE (logic) – Reset game state on New Game
+  - Story: ✅ DONE – Reset game state on New Game
     - Acceptance Criteria: Activating New Game regenerates the board.
     - Acceptance Criteria: Activating New Game resets the captured region to the initial starting region.
     - Acceptance Criteria: Activating New Game resets the move counter to `0`.
@@ -120,16 +120,16 @@
     - Technical Requirement: Funnel New Game through a single initialization routine that rebuilds board, captured state, `currentColor`, `moves`, and `isComplete` together.
 
 - Epic: Core Game Layout
-  - Story: Render the game board grid
+  - Story: ✅ DONE – Render the game board grid
     - Acceptance Criteria: The board renders as a visible grid of cells with clear boundaries.
     - Technical Requirement: Replace the current todo `List` layout in `packages/frontend/src/App.js` with a grid-based board component using CSS Grid or MUI layout primitives.
-  - Story: Distinguish captured cells visually
+  - Story: ✅ DONE – Distinguish captured cells visually
     - Acceptance Criteria: Captured cells have a visual indicator beyond fill color alone.
     - Technical Requirement: Add a secondary captured-state treatment such as border, inset ring, pattern, or icon using `packages/frontend/src/App.css` or MUI styling.
-  - Story: Keep the move counter visible during play
+  - Story: ✅ DONE – Keep the move counter visible during play
     - Acceptance Criteria: The move counter is visible without scrolling during normal gameplay.
     - Technical Requirement: Place the move counter in the top-level game layout, not below the board where it could move off-screen for larger boards.
-  - Story: Keep New Game available during and after play
+  - Story: ✅ DONE – Keep New Game available during and after play
     - Acceptance Criteria: The New Game control remains visible and usable before and after the win state.
     - Technical Requirement: Render the New Game control in a persistent header or status section rather than conditionally mounting it only after completion.
 
