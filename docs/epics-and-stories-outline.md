@@ -1,3 +1,19 @@
+## Implementation Progress
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1 – Remove TODO Application Flow | ✅ DONE | `App.js` rewritten with game state shell; all TODO state, mutations, and UI removed. `index.js` cleaned of `QueryClientProvider`. |
+| Phase 2 – Build Core Game Logic | ⬜ Not started | |
+| Phase 3 – Rebuild the UI | ⬜ Not started | |
+| Phase 4 – Styling and Theming | ⬜ Not started | |
+| Phase 5 – Accessibility | ⬜ Not started | |
+| Phase 6 – Rewrite Test Suite | ⬜ Not started | |
+| Phase 7 – Cleanup and Verification | ⬜ Not started | |
+
+> **Note:** No individual feature stories are marked DONE yet. Phase 1 is the preparatory cleanup and game state scaffolding pass. Feature stories' acceptance criteria are satisfied as their game functionality is built in Phases 2–3.
+
+---
+
 - Epic: Game Board Setup
   - Story: Generate a configurable color grid
     - Acceptance Criteria: A new game creates a rectangular grid using configurable row and column values.
