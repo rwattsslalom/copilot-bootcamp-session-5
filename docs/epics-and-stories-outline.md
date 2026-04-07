@@ -7,7 +7,7 @@
 | Phase 3 – Rebuild the UI | ✅ DONE | Board grid (CSS Grid), captured-cell inset-ring indicator, palette buttons with active double-ring, move counter in header, win-state banner, persistent New Game button. |
 | Phase 4 – Styling and Theming | ✅ DONE | `theme.js` updated with game-focused palette, typography, and component tokens. `App.css` extended with responsive board sizing, win-banner animation, and palette-strip rules. |
 | Phase 5 – Accessibility | ✅ DONE | Accessible names (`aria-label`), `aria-pressed` on palette buttons, `role="status" aria-live="polite"` on win banner, keyboard-reachable MUI buttons, non-color active/captured indicators delivered in Phase 3. |
-| Phase 6 – Rewrite Test Suite | ⬜ Not started | |
+| Phase 6 – Rewrite Test Suite | ✅ DONE | `gameLogic.test.js` added with 23 pure unit tests. `App.test.js` replaced with 5 UI interaction tests using `_testState` injection. 31/31 tests pass. |
 | Phase 7 – Cleanup and Verification | ⬜ Not started | |
 
 > **Note:** No individual feature stories are marked DONE yet. Phase 1 is the preparatory cleanup and game state scaffolding pass. Feature stories' acceptance criteria are satisfied as their game functionality is built in Phases 2–3.
@@ -154,44 +154,44 @@
     - Technical Requirement: Render the win state in a semantic status region or live region in `packages/frontend/src/App.js`.
 
 - Epic: Gameplay Logic Testing
-  - Story: Test board generation dimensions
+  - Story: ✅ DONE – Test board generation dimensions
     - Acceptance Criteria: Automated tests verify that board generation returns the requested row and column counts.
     - Technical Requirement: Replace the current heading-only test coverage in `packages/frontend/src/__tests__/App.test.js` with focused tests for board-generation utilities.
-  - Story: Test board generation against the configured palette
+  - Story: ✅ DONE – Test board generation against the configured palette
     - Acceptance Criteria: Automated tests verify that generated cells only use configured palette colors.
     - Technical Requirement: Add deterministic unit tests around the board-generation utility with an injected palette.
-  - Story: Test initial captured region setup
+  - Story: ✅ DONE – Test initial captured region setup
     - Acceptance Criteria: Automated tests verify the initial captured region matches the expected starting state and initial same-color expansion behavior.
     - Technical Requirement: Expose initialization helpers separately from the React component so initial capture behavior can be tested without rendering the full app.
-  - Story: Test same-color move behavior
+  - Story: ✅ DONE – Test same-color move behavior
     - Acceptance Criteria: Automated tests verify that selecting the current color does not change captured state or move count.
     - Technical Requirement: Add pure-function tests for the move handler logic to verify same-color guards.
-  - Story: Test valid move counting
+  - Story: ✅ DONE – Test valid move counting
     - Acceptance Criteria: Automated tests verify that a valid color change increments the move counter exactly once.
     - Technical Requirement: Assert move-count changes in state-transition tests rather than depending only on rendered text.
-  - Story: Test orthogonal flood-fill expansion
+  - Story: ✅ DONE – Test orthogonal flood-fill expansion
     - Acceptance Criteria: Automated tests verify that orthogonally connected matching cells are captured after a valid move.
     - Technical Requirement: Add unit tests for the flood-fill helper using fixed board fixtures.
-  - Story: Test diagonal exclusion rules
+  - Story: ✅ DONE – Test diagonal exclusion rules
     - Acceptance Criteria: Automated tests verify that diagonal-only matching cells are not captured.
     - Technical Requirement: Include board fixtures that isolate diagonal adjacency cases in game-logic tests.
-  - Story: Test completion detection
+  - Story: ✅ DONE – Test completion detection
     - Acceptance Criteria: Automated tests verify that completion is detected when all cells are captured.
     - Technical Requirement: Add state-transition tests that confirm `isComplete` becomes true only when captured count equals total cells.
 
 - Epic: User Interface Testing
-  - Story: Test initial board and palette rendering
+  - Story: ✅ DONE – Test initial board and palette rendering
     - Acceptance Criteria: UI tests verify that the board and color palette render on initial load.
     - Technical Requirement: Rewrite `packages/frontend/src/__tests__/App.test.js` to render the game UI instead of asserting the current TODO heading.
-  - Story: Test the initial move counter display
+  - Story: ✅ DONE – Test the initial move counter display
     - Acceptance Criteria: UI tests verify that the move counter starts at `0`.
     - Technical Requirement: Add rendered assertions for the initial move counter in React Testing Library tests.
-  - Story: Test move count updates after valid selections
+  - Story: ✅ DONE – Test move count updates after valid selections
     - Acceptance Criteria: UI tests verify that clicking a valid color selection updates the displayed move count.
     - Technical Requirement: Use `@testing-library/user-event` to simulate palette interaction and assert updated move text.
-  - Story: Test win state rendering
+  - Story: ✅ DONE – Test win state rendering
     - Acceptance Criteria: UI tests verify that the completion message appears when the board is fully captured.
     - Technical Requirement: Allow deterministic board injection or mock initial state so the test suite can reach the win state predictably.
-  - Story: Test New Game reset behavior
+  - Story: ✅ DONE – Test New Game reset behavior
     - Acceptance Criteria: UI tests verify that activating New Game resets the board and move counter.
     - Technical Requirement: Add UI tests that trigger the New Game control and assert that board state and moves reset together.

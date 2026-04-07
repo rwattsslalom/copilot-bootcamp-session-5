@@ -30,8 +30,8 @@ function initGame() {
 }
 
 // ─── App ──────────────────────────────────────────────────────────────────────
-function App() {
-  const [gameState, setGameState] = useState(initGame);
+function App({ _testState } = {}) {
+  const [gameState, setGameState] = useState(() => _testState || initGame());
 
   const { board, captured, currentColor, moves, isComplete, palette, columns } = gameState;
 
